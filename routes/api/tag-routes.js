@@ -49,7 +49,10 @@ router.put('/:id', async (req, res) => {
         id: req.params.id,
       }
     });
-    res.status(200).json(tagData);
+    const updatedTag = await Tag.findByPk(req.params.id, {
+      include: [{model: Product}],
+    });
+    res.status(200).json(updatedTag);
   } catch(err) {
     res.status(500).json(err);
   };
